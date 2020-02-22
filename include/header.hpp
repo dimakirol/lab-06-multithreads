@@ -7,7 +7,7 @@
 #include <thread>
 #include <string>
 #include <ctime>
-#include "picosha2.h"
+#include <picosha2.h>
 #define NUMBER_OF_THREADS std::thread::hardware_concurrency()
 
 #endif // INCLUDE_HEADER_HPP_
