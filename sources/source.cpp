@@ -4,17 +4,18 @@
 
 int main()
 {
-    auto func = []()//считать строки 7-31 просто необычно заданной функцией f
+    auto func = []()//считать строки 7-32 просто необычно заданной функцией f
     {
         std::string hex_str = ""; //в ней будет лежать хэш!!!!
         do {
-            //в строках 12-16 генерируем случайную строку от 5 до 50 символов
+            //в строках 12-17 генерируем случайную строку от 5 до 50 символов
+            unsigned now = static_cast<unsigned int>(time(0);
             uint32_t size = static_cast<char>(rand_r(&now) % 50 + 5);
             std::string src_str = "";
             for (uint32_t j = 0; j < size; ++j) {
                 src_str[j] = static_cast<char>(rand_r(&now) % 256);
             }
-            //в строках 18-21 считаем хэш для строки
+            //в строках 19-22 считаем хэш для строки
             std::vector<unsigned char> hash(picosha2::k_digest_size);
             picosha2::hash256(src_str.begin(), src_str.end(), hash.begin(),
                                                                hash.end());
@@ -26,7 +27,7 @@ int main()
             std::cout<< "' SHA= " << hex_str << std::endl;
         }while(hex_str.rfind("0000") != 60);
         //в данном месте искомый хэш найден и лежит в той же строке после
-        //закрытия фигурной скобки на 31 строке данный поток закроется
+        //закрытия фигурной скобки на 32 строке данный поток закроется
         //так что лучше именно здесь логировать успешный результат
     };
     auto *arr = new std::thread[NUMBER_OF_THREADS]; //создаем массив потоков
