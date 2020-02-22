@@ -9,7 +9,7 @@ int main()
         std::string hex_str = ""; //в ней будет лежать хэш!!!!
         do {
             //в строках 12-17 генерируем случайную строку от 5 до 50 символов
-            unsigned now = static_cast<unsigned int>(time(0);
+            unsigned now = static_cast<unsigned int>(time(0));
             uint32_t size = static_cast<char>(rand_r(&now) % 50 + 5);
             std::string src_str = "";
             for (uint32_t j = 0; j < size; ++j) {
