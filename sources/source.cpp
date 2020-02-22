@@ -22,7 +22,7 @@ int main()
             //пока вывожу просто сиаутом id потока, сгенерированную строку и
             //полученный хэш, соответственно
             std::cout << "ID: " << std::this_thread::get_id();
-            std::cout << " string: '" << src_str.c_str()
+            std::cout << " string: '" << src_str.c_str();
             std::cout<< "' SHA= " << hex_str << std::endl;
         }while(hex_str.rfind("0000") != 60);
         //в данном месте искомый хэш найден и лежит в той же строке после
