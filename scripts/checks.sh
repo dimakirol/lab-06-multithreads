@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-files=`find . -name "header.hpp" -or -name "source.cpp" -or -name "test.cpp" | grep -v "./tools/*"`
+files=`find . -name "header.hpp" -or -name "source.cpp" -or -name "test.cpp" | grep -v "./tools/*" | grep -v "./third-party/*"`
 filter=-build/c++11,-runtime/references,-whitespace/braces,-whitespace/indent,-whitespace/comments,-build/include_order
 echo $files | xargs cpplint --filter=$filter
 
