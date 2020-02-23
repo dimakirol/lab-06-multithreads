@@ -13,10 +13,10 @@
 #include <mutex>
 #define NUMBER_OF_THREADS 2
 //std::thread::hardware_concurrency()
-string alha = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvw
-alha += "xyz1234567890";
 
 void head() {
+  string alha = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvw
+  alha += "xyz1234567890";
   auto func = []() //считать строки 7-32 просто необычно заданной функцией f
   {
     std::mutex door_first;
