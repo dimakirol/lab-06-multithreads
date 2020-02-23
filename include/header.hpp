@@ -15,7 +15,7 @@
 //std::thread::hardware_concurrency()
 
 void head() {
-  string alha = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvw
+  string alha = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvw";
   alha += "xyz1234567890";
   auto func = []() //считать строки 7-32 просто необычно заданной функцией f
   {
