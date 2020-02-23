@@ -19,7 +19,7 @@ void head() {
             "abcdefghijklmnopqrstuvwxyz"
             "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
             "1234567890";
-  auto func = []() //считать строки 7-32 просто необычно заданной функцией f
+  auto func = [](const char* alphabet) //считать строки 7-32 просто необычно заданной функцией f
   {
     std::mutex door_first;
     door_first.lock();
@@ -38,7 +38,7 @@ void head() {
       *size = static_cast<uint32_t>(rand_r(now) % 50 + 5);
       door_second.unlock();
       for (uint32_t j = 0; j < *size; ++j) {
-        (*src_str) += alpha[static_cast<char>(rand_r(now) % 62)];
+        (*src_str) += alphabet[static_cast<char>(rand_r(now) % 62)];
       }
       //в строках 19-22 считаем хэш для строки
       picosha2::hash256(src_str->begin(), src_str->end(), hash->begin(),
@@ -69,7 +69,7 @@ void head() {
   };
   auto *arr = new std::thread[NUMBER_OF_THREADS]; //создаем массив потоков
   for (uint32_t i = 0; i < NUMBER_OF_THREADS; ++i) {
-    arr[i] = std::thread(func); //отправляем каждый вновь созданный поток
+    arr[i] = std::thread(func, alpha); //отправляем каждый вновь созданный поток
                                 //работать в функции f
   }
   for (uint32_t i = 0; i < NUMBER_OF_THREADS; ++i) {
