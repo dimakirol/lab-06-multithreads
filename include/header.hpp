@@ -26,8 +26,11 @@ void head() {
     door_first.unlock();
     do {
       //в строках 12-17 генерируем случайную строку от 5 до 50 символов
+      std::mutex door_second;
+      door_second.lock();
       *now = static_cast<unsigned int>(time(0));
       *size = static_cast<uint32_t>(rand_r(now) % 50 + 5);
+      door_second.unlock();
       for (uint32_t j = 0; j < *size; ++j) {
         (*src_str)[j] = static_cast<char>(rand_r(now) % 256);
       }
@@ -37,9 +40,12 @@ void head() {
       *hex_str = picosha2::bytes_to_hex_string(hash->begin(), hash->end());
       //пока вывожу просто сиаутом id потока, сгенерированную строку и
       //полученный хэш, соответственно
+      std::mutex door_print;
+      door_print.lock();
       std::cout << "ID: " << std::this_thread::get_id();
       std::cout << " string: '" << src_str->c_str();
       std::cout << "' SHA= " << *hex_str << std::endl;
+      door_print.unlock();
     } while (hex_str->rfind("0000") != 60);
     std::mutex door_last;
     door_last.lock();
