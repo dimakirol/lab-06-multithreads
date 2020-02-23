@@ -44,7 +44,7 @@ void head() {
       //полученный хэш, соответственно
       std::mutex door_print;
       door_print.lock();
-      src_str = "";
+      *src_str = "";
       //std::cout << "ID: " << std::this_thread::get_id();
       std::cout << " string: '" << src_str->c_str();
       //std::cout << "' SHA= " << *hex_str << std::endl;
