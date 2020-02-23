@@ -32,7 +32,6 @@ void head() {
         (*src_str)[j] = static_cast<char>(rand_r(now) % 256);
       }
       //в строках 19-22 считаем хэш для строки
-     
       picosha2::hash256(src_str->begin(), src_str->end(), hash->begin(),
                         hash->end());
       *hex_str = picosha2::bytes_to_hex_string(hash->begin(), hash->end());
