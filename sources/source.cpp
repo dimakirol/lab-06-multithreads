@@ -4,7 +4,7 @@
 
 // int main()
 // {
-//     auto func = []()//считать строки 7-32 просто необычно заданной функцией f
+//    auto func = []()//считать строки 7-32 просто необычно заданной функцией f
 //     {
 //         std::string hex_str = ""; //в ней будет лежать хэш!!!!
 //         do {
@@ -19,9 +19,9 @@
 //             std::vector<unsigned char> hash(picosha2::k_digest_size);
 //             picosha2::hash256(src_str.begin(), src_str.end(), hash.begin(),
 //                                                                hash.end());
-//             hex_str = picosha2::bytes_to_hex_string(hash.begin(), hash.end());
-//             //пока вывожу просто сиаутом id потока, сгенерированную строку и
-//             //полученный хэш, соответственно
+//   hex_str = picosha2::bytes_to_hex_string(hash.begin(), hash.end());
+//   //пока вывожу просто сиаутом id потока, сгенерированную строку и
+//       //полученный хэш, соответственно
 //             std::cout << "ID: " << std::this_thread::get_id();
 //             std::cout << " string: '" << src_str.c_str();
 //             std::cout<< "' SHA= " << hex_str << std::endl;
