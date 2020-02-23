@@ -11,7 +11,7 @@
 #include <vector>
 #include <picosha2.h>
 #include <mutex>
-#define NUMBER_OF_THREADS std::thread::hardware_concurrency()
+#define NUMBER_OF_THREADS 5 //std::thread::hardware_concurrency()
 
 void head() {
   auto func = []() //считать строки 7-32 просто необычно заданной функцией f
