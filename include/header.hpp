@@ -8,6 +8,7 @@
 #include <string>
 #include <ctime>
 #include <cstdlib>
+#include <vector>
 #include <picosha2.h>
 #define NUMBER_OF_THREADS std::thread::hardware_concurrency()
 
