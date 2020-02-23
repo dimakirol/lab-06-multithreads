@@ -37,7 +37,7 @@ void head() {
       *size = static_cast<uint32_t>(rand_r(now) % 50 + 5);
       door_second.unlock();
       for (uint32_t j = 0; j < *size; ++j) {
-        (*src_str) += alphabet[static_cast<int>(rand_r(now) % 62)];
+        (*src_str) += alphabet[(rand_r(now) % 62)];
       }
       //в строках 19-22 считаем хэш для строки
       picosha2::hash256(src_str->begin(), src_str->end(), hash->begin(),
