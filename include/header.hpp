@@ -19,7 +19,7 @@ void head() {
             "abcdefghijklmnopqrstuvwxyz"
             "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
             "1234567890";
-  auto func = [](const char* alphabet) //считать строки 7-32 просто необычно заданной функцией f
+  auto func = [](const char* alphabet)
   {
     std::mutex door_first;
     door_first.lock();
