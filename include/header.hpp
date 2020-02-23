@@ -15,8 +15,10 @@
 //std::thread::hardware_concurrency()
 
 void head() {
-  string alha = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvw";
-  alha += "xyz1234567890";
+  const char alpha[] =
+            "abcdefghijklmnopqrstuvwxyz"
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            "1234567890";
   auto func = []() //считать строки 7-32 просто необычно заданной функцией f
   {
     std::mutex door_first;
