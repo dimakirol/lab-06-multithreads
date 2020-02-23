@@ -18,11 +18,11 @@ void head() {
   {
     std::mutex door_first;
     door_first.lock();
-    auto hex_str = new string();
+    auto hex_str = new std::string();
     auto hash = new std::vector<unsigned char>(picosha2::k_digest_size);
     auto now = new unsigned;
     auto size = new uint32_t;
-    auto src_str = new string();
+    auto src_str = new std::string();
     door_first.unlock();
     do {
       //в строках 12-17 генерируем случайную строку от 5 до 50 символов
