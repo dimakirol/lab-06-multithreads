@@ -20,18 +20,16 @@ void head() {
     door_first.lock();
     auto hex_str = new string();
     auto hash = new std::vector<unsigned char>(picosha2::k_digest_size);
+    auto now = new unsigned;
+    auto size = new uint32_t;
+    auto src_str = new string();
     door_first.unlock();
     do {
       //в строках 12-17 генерируем случайную строку от 5 до 50 символов
-      std::mutex door_second;
-      door_second.lock();
-      auto now = new unsigned;
       *now = static_cast<unsigned int>(time(0));
-      uint32_t size = static_cast<char>(rand_r(&now) % 50 + 5);
-      auto src_str = new string();
-      door_second.unlock();
-      for (uint32_t j = 0; j < size; ++j) {
-        (*src_str)[j] = static_cast<char>(rand_r(&now) % 256);
+      *size = static_cast<uint32_t>(rand_r(now) % 50 + 5);
+      for (uint32_t j = 0; j < *size; ++j) {
+        (*src_str)[j] = static_cast<char>(rand_r(now) % 256);
       }
       //в строках 19-22 считаем хэш для строки
      
@@ -44,10 +42,17 @@ void head() {
       std::cout << " string: '" << src_str->c_str();
       std::cout << "' SHA= " << *hex_str << std::endl;
     } while (hex_str->rfind("0000") != 60);
+    std::mutex door_last;
+    door_last.lock();
+    delete size;
+    delete now;
+    delete src_str;
+    delete hash;
     delete hex_str;
     //в данном месте искомый хэш найден и лежит в той же строке после
     //закрытия фигурной скобки на 32 строке данный поток закроется
     //так что лучше именно здесь логировать успешный результат
+    door_last.unlock();
   };
   auto *arr = new std::thread[NUMBER_OF_THREADS]; //создаем массив потоков
   for (uint32_t i = 0; i < NUMBER_OF_THREADS; ++i) {
