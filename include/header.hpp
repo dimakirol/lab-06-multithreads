@@ -53,6 +53,7 @@ void head() {
     delete now;
     delete src_str;
     delete hash;
+    std::cout << "' SHA= " << *hex_str << std::endl;
     delete hex_str;
     //в данном месте искомый хэш найден и лежит в той же строке после
     //закрытия фигурной скобки на 32 строке данный поток закроется
