@@ -42,9 +42,9 @@ void head() {
       //полученный хэш, соответственно
       std::mutex door_print;
       door_print.lock();
-      std::cout << "ID: " << std::this_thread::get_id();
-      std::cout << " string: '" << src_str->c_str();
-      std::cout << "' SHA= " << *hex_str << std::endl;
+      //std::cout << "ID: " << std::this_thread::get_id();
+      //std::cout << " string: '" << src_str->c_str();
+      //std::cout << "' SHA= " << *hex_str << std::endl;
       door_print.unlock();
     } while (hex_str->rfind("0000") != 60);
     std::mutex door_last;
