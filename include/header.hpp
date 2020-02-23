@@ -28,7 +28,7 @@ void head() {
       //в строках 12-17 генерируем случайную строку от 5 до 50 символов
       std::mutex door_second;
       door_second.lock();
-      srand(time(nullptr);
+      srand(time(nullptr));
       *now = static_cast<unsigned int>(time(0));
       *size = static_cast<uint32_t>(rand_r(now) % 50 + 5);
       door_second.unlock();
