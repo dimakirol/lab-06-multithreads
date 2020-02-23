@@ -11,7 +11,8 @@
 #include <vector>
 #include <picosha2.h>
 #include <mutex>
-#define NUMBER_OF_THREADS 5 //std::thread::hardware_concurrency()
+#define NUMBER_OF_THREADS 2
+//std::thread::hardware_concurrency()
 
 void head() {
   auto func = []() //считать строки 7-32 просто необычно заданной функцией f
@@ -22,7 +23,7 @@ void head() {
     auto hash = new std::vector<unsigned char>(picosha2::k_digest_size);
     auto now = new unsigned;
     auto size = new uint32_t;
-    auto src_str = new std::string(55, '\0');
+    auto src_str = new std::string;
     door_first.unlock();
     do {
       //в строках 12-17 генерируем случайную строку от 5 до 50 символов
@@ -33,7 +34,7 @@ void head() {
       *size = static_cast<uint32_t>(rand_r(now) % 50 + 5);
       door_second.unlock();
       for (uint32_t j = 0; j < *size; ++j) {
-        (*src_str)[j] = static_cast<char>(rand_r(now) % 256);
+        (*src_str) += static_cast<char>(rand_r(now) % 256);
       }
       //в строках 19-22 считаем хэш для строки
       picosha2::hash256(src_str->begin(), src_str->end(), hash->begin(),
@@ -43,6 +44,7 @@ void head() {
       //полученный хэш, соответственно
       std::mutex door_print;
       door_print.lock();
+      src_str = "";
       //std::cout << "ID: " << std::this_thread::get_id();
       //std::cout << " string: '" << src_str->c_str();
       //std::cout << "' SHA= " << *hex_str << std::endl;
