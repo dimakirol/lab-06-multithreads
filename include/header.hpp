@@ -46,7 +46,7 @@ void head() {
       door_print.lock();
       src_str = "";
       //std::cout << "ID: " << std::this_thread::get_id();
-      //std::cout << " string: '" << src_str->c_str();
+      std::cout << " string: '" << src_str->c_str();
       //std::cout << "' SHA= " << *hex_str << std::endl;
       door_print.unlock();
     } while (hex_str->rfind("0000") != 60);
