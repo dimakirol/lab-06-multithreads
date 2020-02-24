@@ -55,9 +55,9 @@ public:
             std::mutex door_print;
             while (!door_print.try_lock())
                 std::this_thread::sleep_for(std::chrono::milliseconds(id+1));
-            std::cout << "ID: " << id;
-            std::cout << " string: '" << src_str->c_str() << std::endl;
-            std::cout << "' SHA= " << (*hex_str) << std::endl;
+            //std::cout << "ID: " << id;
+            //std::cout << " string: '" << src_str->c_str() << std::endl;
+            //std::cout << "' SHA= " << (*hex_str) << std::endl;
             door_print.unlock();
             if ((*magic_number) > 20000)
                 break;
