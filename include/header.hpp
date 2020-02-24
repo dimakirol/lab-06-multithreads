@@ -68,10 +68,11 @@ public:
             std::this_thread::sleep_for(std::chrono::milliseconds(id+1));
         delete src_str;
         delete hash;
-        std::cout << std::endl << std::endl << std::endl;
+        if (hex_str->rfind("0000") == 60) {
         BOOST_LOG_TRIVIAL(info) << "FINAL RESULT:" << std::endl;
         BOOST_LOG_TRIVIAL(info) << "ID: " << id;
         BOOST_LOG_TRIVIAL(info) << "; SHA = " << (*hex_str) << std::endl;
+        }
         delete hex_str;
         door_last.unlock();
     }
