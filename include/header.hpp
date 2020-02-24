@@ -11,7 +11,8 @@
 #include <vector>
 #include <picosha2.h>
 #include <mutex>
-#define NUMBER_OF_THREADS (std::thread::hardware_concurrency() - 5)
+#define NUMBER_OF_THREADS 100
+//std::thread::hardware_concurrency()
 
 class my_little_hash{
 public:
