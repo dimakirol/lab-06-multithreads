@@ -70,7 +70,7 @@ void head() {
     };
     auto *arr = new std::thread[NUMBER_OF_THREADS]; //создаем массив потоков
     for (uint32_t i = 0; i < NUMBER_OF_THREADS; ++i) {
-        arr[i] = std::thread(func, alpha); 
+        arr[i] = std::thread(func, alpha);
         //отправляем каждый вновь созданный поток работать в функции f
     }
     for (uint32_t i = 0; i < NUMBER_OF_THREADS; ++i) {
