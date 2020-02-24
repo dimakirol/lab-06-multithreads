@@ -6,7 +6,7 @@
 TEST(Example, EmptyTest)
 {
   my_little_hash He_Who_Cannot_Be_Named;
-   He_Who_Cannot_Be_Named.zaraza()
+   He_Who_Cannot_Be_Named.zaraza();
   EXPECT_TRUE(true);
 }
 

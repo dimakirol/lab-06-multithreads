@@ -14,8 +14,6 @@
 #define NUMBER_OF_THREADS 7
 //std::thread::hardware_concurrency()
 
-// Copyright 2019 dimakirol <your_email>
-
 class my_little_hash{
 public:
     my_little_hash() {
