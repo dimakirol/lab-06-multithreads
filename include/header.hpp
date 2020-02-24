@@ -11,8 +11,7 @@
 #include <vector>
 #include <picosha2.h>
 #include <mutex>
-#define NUMBER_OF_THREADS 7
-//std::thread::hardware_concurrency()
+#define NUMBER_OF_THREADS (std::thread::hardware_concurrency() - 5)
 
 class my_little_hash{
 public:
@@ -56,7 +55,7 @@ public:
             std::cout << " string: '" << src_str->c_str() << std::endl;
             std::cout << "' SHA= " << (*hex_str) << std::endl;
             door_print.unlock();
-            if ((*magic_number) > 1024)
+            if ((*magic_number) > 1000000000)
                 break;
         } while (hex_str->rfind("0000") != 60);
         std::mutex door_last;
