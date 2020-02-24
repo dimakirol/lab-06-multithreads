@@ -3,16 +3,17 @@
 #ifndef INCLUDE_HEADER_HPP_
 #define INCLUDE_HEADER_HPP_
 
-#include <iostream>
-#include <thread>
-#include <string>
-#include <atomic>
-#include <ctime>
-#include <cstdlib>
-#include <vector>
-#include <picosha2.h>
-#include <mutex>
+#include <boost/log/core.hpp>
 #include <boost/log/trivial.hpp>
+#include <boost/log/expressions.hpp>
+#include <boost/log/utility/setup/file.hpp>
+#include <boost/log/utility/setup/common_attributes.hpp>
+#include <boost/log/utility/setup/console.hpp>
+#include <boost/log/support/date_time.hpp>
+#include <boost/log/sources/severity_logger.hpp>
+#include <boost/log/sinks.hpp>
+#include <boost/core/null_deleter.hpp>
+#include <boost/log/expressions/keyword.hpp>
 #define NUMBER_OF_THREADS 100
 //std::thread::hardware_concurrency()
 
