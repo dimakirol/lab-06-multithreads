@@ -23,7 +23,7 @@ public:
         "abcdefghijklmnopqrstuvwxyz"
         "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         "1234567890";
-        counter=0;
+        counter = 0;
     }
     static void calc_hash(uint32_t id, std::string typical,
                                        std::atomic_ulong *magic_number){
@@ -40,7 +40,7 @@ public:
             std::mutex door_second;
             while (!door_second.try_lock())
                 std::this_thread::sleep_for(std::chrono::milliseconds(id));
-            unsigned long temp = (*magic_number) % typical.length();
+            uint64_t temp = (*magic_number) % typical.length();
             (*src_str).erase(temp, 1);
             (*src_str).push_back(typical[temp]);
             (*magic_number)++;
@@ -79,9 +79,11 @@ public:
             arr[i] = std::thread(calc_hash, i, mask, &counter);
         }
         for (uint32_t i = 0; i < NUMBER_OF_THREADS; ++i) {
-            arr[i].join(); // на данном месте потоки вышли из функции f и умерли)
+            arr[i].join();
+            // на данном месте потоки вышли из функции f и умерли)
         }
     }
+
 private:
     std::string mask;
     std::atomic_ulong counter;
