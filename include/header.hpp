@@ -3,6 +3,16 @@
 #ifndef INCLUDE_HEADER_HPP_
 #define INCLUDE_HEADER_HPP_
 
+#include <iostream>
+#include <thread>
+#include <string>
+#include <atomic>
+#include <ctime>
+#include <cstdlib>
+#include <vector>
+#include <picosha2.h>
+#include <mutex>
+
 #include <boost/log/core.hpp>
 #include <boost/log/trivial.hpp>
 #include <boost/log/expressions.hpp>
