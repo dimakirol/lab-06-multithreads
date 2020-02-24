@@ -43,7 +43,7 @@ public:
             while (!door_second.try_lock())
                 std::this_thread::sleep_for(std::chrono::milliseconds(id+1));
             uint64_t temp = (*magic_number) % typical.length();
-            (*src_str).erase(temp, 1);
+            (*src_str).erase((temp % (*src_str).length()), 1);
             (*src_str).push_back(typical[temp]);
             (*magic_number)++;
             door_second.unlock();
