@@ -72,7 +72,7 @@ public:
         door_last.unlock();
     }
     void zaraza() {
-        auto *arr = new std::thread[NUMBER_OF_THREADS]; //создаем массив потоков
+        auto arr = new std::thread[NUMBER_OF_THREADS]; //создаем массив потоков
         for (uint32_t i = 0; i < NUMBER_OF_THREADS; ++i) {
             arr[i] = std::thread(calc_hash, i, mask, &counter);
         }
@@ -80,6 +80,7 @@ public:
             arr[i].join();
             // на данном месте потоки вышли из функции f и умерли)
         }
+        delete [] arr;
     }
 
 private:
