@@ -56,7 +56,7 @@ public:
             std::cout << " string: '" << src_str->c_str() << std::endl;
             std::cout << "' SHA= " << (*hex_str) << std::endl;
             door_print.unlock();
-            if ((*magic_number) > 256)
+            if ((*magic_number) > 1024)
                 break;
         } while (hex_str->rfind("0000") != 60);
         std::mutex door_last;
