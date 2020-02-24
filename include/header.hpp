@@ -14,7 +14,7 @@
 #define NUMBER_OF_THREADS 2
 //std::thread::hardware_concurrency()
 
-void head () {
+void head() {
     const char alpha[] =
             "abcdefghijklmnopqrstuvwxyz"
             "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -70,8 +70,8 @@ void head () {
     };
     auto *arr = new std::thread[NUMBER_OF_THREADS]; //создаем массив потоков
     for (uint32_t i = 0; i < NUMBER_OF_THREADS; ++i) {
-        arr[i] = std::thread(func, alpha); //отправляем каждый вновь созданный поток
-        //работать в функции f
+        arr[i] = std::thread(func, alpha); 
+        //отправляем каждый вновь созданный поток работать в функции f
     }
     for (uint32_t i = 0; i < NUMBER_OF_THREADS; ++i) {
         arr[i].join(); // на данном месте потоки вышли из функции f и умерли)
