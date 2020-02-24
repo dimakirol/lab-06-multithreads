@@ -7,6 +7,7 @@
 #include <thread>
 #include <string>
 #include <atomic>
+#include <ctime>
 #include <cstdlib>
 #include <vector>
 #include <picosha2.h>
@@ -21,7 +22,8 @@ public:
         "abcdefghijklmnopqrstuvwxyz"
         "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         "1234567890";
-        counter = 0;
+        auto now = static_cast<unsigned int>(time(nullptr));
+        counter = static_cast<uint64_t>(rand_r(&now) % 62);
     }
     static void calc_hash(uint32_t id, std::string typical,
                                        std::atomic_ulong *magic_number){
@@ -56,7 +58,7 @@ public:
             std::cout << " string: '" << src_str->c_str() << std::endl;
             std::cout << "' SHA= " << (*hex_str) << std::endl;
             door_print.unlock();
-            if ((*magic_number) > 1000000000)
+            if ((*magic_number) > 25000)
                 break;
         } while (hex_str->rfind("0000") != 60);
         std::mutex door_last;
