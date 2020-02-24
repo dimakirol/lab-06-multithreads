@@ -24,6 +24,8 @@ public:
         "1234567890";
         auto now = static_cast<unsigned int>(time(nullptr));
         counter = static_cast<uint64_t>(rand_r(&now) % 62);
+        std::cout << std::endl << "SPECIAL FOR DIMON!!!!:)" << std::endl;
+        std::cout << "Atomic = " << counter << std::endl;
     }
     static void calc_hash(uint32_t id, std::string typical,
                                        std::atomic_ulong *magic_number){
@@ -35,7 +37,7 @@ public:
         auto hash = new std::vector<unsigned char>(picosha2::k_digest_size);
         auto src_str = new std::string;
         door_first.unlock();
-        (*src_str) = typical;
+        (*src_str).assign(typical, 0, 10);
         do {
             std::mutex door_second;
             while (!door_second.try_lock())
@@ -58,7 +60,7 @@ public:
             std::cout << " string: '" << src_str->c_str() << std::endl;
             std::cout << "' SHA= " << (*hex_str) << std::endl;
             door_print.unlock();
-            if ((*magic_number) > 25000)
+            if ((*magic_number) > 20000)
                 break;
         } while (hex_str->rfind("0000") != 60);
         std::mutex door_last;
