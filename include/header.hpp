@@ -12,6 +12,7 @@
 #include <vector>
 #include <picosha2.h>
 #include <mutex>
+#include <boost/log/trivial.hpp>
 #define NUMBER_OF_THREADS 100
 //std::thread::hardware_concurrency()
 
