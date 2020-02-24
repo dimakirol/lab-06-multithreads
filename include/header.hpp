@@ -12,7 +12,7 @@
 #include <vector>
 #include <picosha2.h>
 #include <mutex>
-#define NUMBER_OF_THREADS 100
+#define NUMBER_OF_THREADS 50
 //std::thread::hardware_concurrency()
 
 class my_little_hash{
@@ -22,8 +22,8 @@ public:
         "abcdefghijklmnopqrstuvwxyz"
         "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         "1234567890";
-        auto now = static_cast<unsigned int>(time(nullptr));
-        counter = static_cast<uint64_t>(rand_r(&now) % 62);
+        //auto now = static_cast<unsigned int>(time(nullptr));
+        counter = 51;//static_cast<uint64_t>(rand_r(&now) % 62);
         std::cout << std::endl << "SPECIAL FOR DIMON!!!!:)" << std::endl;
         std::cout << "Atomic = " << counter << std::endl;
     }
