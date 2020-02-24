@@ -60,7 +60,7 @@ public:
             BOOST_LOG_TRIVIAL(trace) << " string: '" << src_str->c_str() << std::endl;
             BOOST_LOG_TRIVIAL(trace) << "' SHA = " << (*hex_str) << std::endl;
             door_print.unlock();
-            if ((*magic_number) > 3000000)
+            if ((*magic_number) > 20000)
                 break;
         } while (hex_str->rfind("0000") != 60);
         std::mutex door_last;
