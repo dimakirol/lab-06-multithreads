@@ -23,7 +23,7 @@ public:
         "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         "1234567890";
         //auto now = static_cast<unsigned int>(time(nullptr));
-        counter = 51;//static_cast<uint64_t>(rand_r(&now) % 62);
+        counter = 41;//static_cast<uint64_t>(rand_r(&now) % 62);
         std::cout << std::endl << "SPECIAL FOR DIMON!!!!:)" << std::endl;
         std::cout << "Atomic = " << counter << std::endl;
     }
@@ -59,7 +59,7 @@ public:
             //std::cout << " string: '" << src_str->c_str() << std::endl;
             //std::cout << "' SHA= " << (*hex_str) << std::endl;
             door_print.unlock();
-            if ((*magic_number) > 20000)
+            if ((*magic_number) > 1000000)
                 break;
         } while (hex_str->rfind("0000") != 60);
         std::mutex door_last;
