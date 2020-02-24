@@ -27,7 +27,7 @@ public:
                                        std::atomic_ulong *magic_number){
         std::mutex door_first;
         while (!door_first.try_lock())
-            std::this_thread::sleep_for(std::chrono::milliseconds(id));
+            std::this_thread::sleep_for(std::chrono::milliseconds(id+1));
         //std::cout << id << std::endl;
         auto hex_str = new std::string(61, '\0');
         auto hash = new std::vector<unsigned char>(picosha2::k_digest_size);
@@ -37,7 +37,7 @@ public:
         do {
             std::mutex door_second;
             while (!door_second.try_lock())
-                std::this_thread::sleep_for(std::chrono::milliseconds(id));
+                std::this_thread::sleep_for(std::chrono::milliseconds(id+1));
             uint64_t temp = (*magic_number) % typical.length();
             (*src_str).erase(temp, 1);
             (*src_str).push_back(typical[temp]);
@@ -51,7 +51,7 @@ public:
 
             std::mutex door_print;
             while (!door_print.try_lock())
-                std::this_thread::sleep_for(std::chrono::milliseconds(id));
+                std::this_thread::sleep_for(std::chrono::milliseconds(id+1));
             std::cout << "ID: " << id;
             std::cout << " string: '" << src_str->c_str() << std::endl;
             std::cout << "' SHA= " << (*hex_str) << std::endl;
@@ -61,7 +61,7 @@ public:
         } while (hex_str->rfind("0000") != 60);
         std::mutex door_last;
         while (!door_last.try_lock())
-            std::this_thread::sleep_for(std::chrono::milliseconds(id));
+            std::this_thread::sleep_for(std::chrono::milliseconds(id+1));
         delete src_str;
         delete hash;
         std::cout << std::endl << std::endl << std::endl;
