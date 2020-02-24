@@ -57,8 +57,8 @@ public:
             while (!door_print.try_lock())
                 std::this_thread::sleep_for(std::chrono::milliseconds(id+1));
             BOOST_LOG_TRIVIAL(trace) <<  "ID: " << id;
-            BOOST_LOG_TRIVIAL(trace) << " string: '" << src_str->c_str() << std::endl;
-            BOOST_LOG_TRIVIAL(trace) << "' SHA = " << (*hex_str) << std::endl;
+            BOOST_LOG_TRIVIAL(trace) << " string: '" << src_str->c_str();
+            BOOST_LOG_TRIVIAL(trace) << "' SHA = " << (*hex_str);
             door_print.unlock();
             if ((*magic_number) > 20000)
                 break;
@@ -69,9 +69,9 @@ public:
         delete src_str;
         delete hash;
         if (hex_str->rfind("0000") == 60) {
-        BOOST_LOG_TRIVIAL(info) << "FINAL RESULT:" << std::endl;
+        BOOST_LOG_TRIVIAL(info) << "FINAL RESULT: ";
         BOOST_LOG_TRIVIAL(info) << "ID: " << id;
-        BOOST_LOG_TRIVIAL(info) << "; SHA = " << (*hex_str) << std::endl;
+        BOOST_LOG_TRIVIAL(info) << "; SHA = " << (*hex_str);
         }
         delete hex_str;
         door_last.unlock();
