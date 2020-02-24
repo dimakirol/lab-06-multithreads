@@ -56,9 +56,9 @@ public:
             std::mutex door_print;
             while (!door_print.try_lock())
                 std::this_thread::sleep_for(std::chrono::milliseconds(id+1));
-            //std::cout << "ID: " << id;
-            //std::cout << " string: '" << src_str->c_str() << std::endl;
-            //std::cout << "' SHA= " << (*hex_str) << std::endl;
+            BOOST_LOG_TRIVIAL(trace) <<  "ID: " << id;
+            BOOST_LOG_TRIVIAL(trace) << " string: '" << src_str->c_str() << std::endl;
+            BOOST_LOG_TRIVIAL(trace) << "' SHA = " << (*hex_str) << std::endl;
             door_print.unlock();
             if ((*magic_number) > 3000000)
                 break;
@@ -69,9 +69,9 @@ public:
         delete src_str;
         delete hash;
         std::cout << std::endl << std::endl << std::endl;
-        std::cout << "FINAL RESULT:" << std::endl;
-        std::cout << "ID: " << id;
-        std::cout << "; SHA= " << (*hex_str) << std::endl;
+        BOOST_LOG_TRIVIAL(info) << "FINAL RESULT:" << std::endl;
+        BOOST_LOG_TRIVIAL(info) << "ID: " << id;
+        BOOST_LOG_TRIVIAL(info) << "; SHA = " << (*hex_str) << std::endl;
         delete hex_str;
         door_last.unlock();
     }
