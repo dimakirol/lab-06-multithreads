@@ -18,7 +18,7 @@
 class my_little_hash{
 public:
     my_little_hash() {
-        mask =
+        alpha =
         "abcdefghijklmnopqrstuvwxyz"
         "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         "1234567890";
@@ -27,24 +27,23 @@ public:
         std::cout << std::endl << "SPECIAL FOR DIMON!!!!:)" << std::endl;
         std::cout << "Atomic = " << counter << std::endl;
     }
-    static void calc_hash(uint32_t id, std::string typical,
+    static void calc_hash(uint32_t id, std::string alphabet,
                                        std::atomic_ulong *magic_number){
         std::mutex door_first;
         while (!door_first.try_lock())
             std::this_thread::sleep_for(std::chrono::milliseconds(id+1));
-        //std::cout << id << std::endl;
         auto hex_str = new std::string(61, '\0');
         auto hash = new std::vector<unsigned char>(picosha2::k_digest_size);
         auto src_str = new std::string;
         door_first.unlock();
-        (*src_str).assign(typical, 0, 10);
+        (*src_str).assign(alphabet, 0, 10);
         do {
             std::mutex door_second;
             while (!door_second.try_lock())
                 std::this_thread::sleep_for(std::chrono::milliseconds(id+1));
-            uint64_t temp = (*magic_number) % typical.length();
+            uint64_t temp = (*magic_number) % alphabet.length();
             (*src_str).erase((temp % (*src_str).length()), 1);
-            (*src_str).push_back(typical[temp]);
+            (*src_str).push_back(alphabet[temp]);
             (*magic_number)++;
             door_second.unlock();
 
@@ -78,7 +77,7 @@ public:
     void zaraza() {
         auto arr = new std::thread[NUMBER_OF_THREADS]; //создаем массив потоков
         for (uint32_t i = 0; i < NUMBER_OF_THREADS; ++i) {
-            arr[i] = std::thread(calc_hash, i, mask, &counter);
+            arr[i] = std::thread(calc_hash, i, alpha, &counter);
         }
         for (uint32_t i = 0; i < NUMBER_OF_THREADS; ++i) {
             arr[i].join();
@@ -88,7 +87,7 @@ public:
     }
 
 private:
-    std::string mask;
+    std::string alpha;
     std::atomic_ulong counter;
 };
 
