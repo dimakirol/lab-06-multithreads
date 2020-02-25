@@ -66,15 +66,16 @@ public:
         std::mutex door_last;
         while (!door_last.try_lock())
             std::this_thread::sleep_for(std::chrono::milliseconds(id+1));
-        delete src_str;
         delete hash;
         if (hex_str->rfind("0000") == 60) {
             std::cout << std::endl << std::endl << std::endl;
-            std::cout << "FINAL RESULT: ";
+            std::cout << "FINAL RESULT: " << std::endl;
+            std::cout << "String '" << src_str->c_str() << std::endl;
             std::cout << "ID: " << id;
             std::cout << "; SHA = " << (*hex_str);
         }
         delete hex_str;
+        delete src_str;
         door_last.unlock();
     }
     void zaraza() {
