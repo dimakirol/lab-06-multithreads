@@ -102,7 +102,7 @@ public:
             std::mutex door_print;
             while (!door_print.try_lock())
                 std::this_thread::sleep_for(std::chrono::milliseconds(id+1));
-            //BOOST_LOG_SEV(trace, lg) <<  "ID: " << id; הכÿ גûגמהא ג פאיכ
+            //BOOST_LOG_SEV(trace, lg) <<  "ID: " << id; for file output
             BOOST_LOG_TRIVIAL(trace) <<  "ID: " << id;
             BOOST_LOG_TRIVIAL(trace) << "; string: '" << src_str->c_str();
             BOOST_LOG_TRIVIAL(trace) << "' SHA = " << (*hex_str);
