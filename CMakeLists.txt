@@ -26,15 +26,9 @@ string(APPEND CMAKE_CXX_FLAGS " -Wno-unused-command-line-argument")
 string(APPEND CMAKE_CXX_FLAGS " -Wshadow -Wnon-virtual-dtor")
 
 hunter_add_package(GTest)
-hunter_add_package(Boost COMPONENTS log)
 find_package(GTest CONFIG REQUIRED)
+hunter_add_package(Boost COMPONENTS log)
 find_package(Boost CONFIG REQUIRED log)
-
-set(Boost_USE_STATIC_LIBS ON)
-set(Boost_USE_MULTITHREADED ON)
-set(Boost_USE_STATIC_RUNTIME ON)
-FIND_PACKAGE(Boost REQUIRED COMPONENTS log)
-include_directories(${Boost_INCLUDE_DIRS})
 
 # TODO: change template word to project name and delete this comment
 add_library(template STATIC
@@ -49,14 +43,13 @@ add_executable(tests
 # TODO: change template word to project name and delete this comment
 target_include_directories(template 
   PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
-  PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/third-party
 )
 target_include_directories(tests 
   PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
-  PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/third-party
 )
 # TODO: change template word to project name and delete this comment
-target_link_libraries(tests GTest::main Boost::log ${Boost_LIBRARIES} template)
+target_link_libraries(tests GTest::main template)
+target_link_libraries(template Boost::log)
 enable_testing()
 add_test(NAME unit_tests COMMAND tests) 
 
