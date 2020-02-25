@@ -30,6 +30,16 @@ using src::severity_level;
 
 #define NUMBER_OF_THREADS 100
 //std::thread::hardware_concurrency()
+#define THIS_string "0000"
+#define POS_to_find_THIS_string 60
+#define SIZE_OF_SRC_STR 10
+#define SIZE_OF_HASH_STR 61
+#define MAX_NUMBER_OF_CALCS 20000
+#define LOG_FILE_NAME "sample_%N.log"
+#define ROTATION_SIZE_A 10
+#define ROTATION_SIZE_B 1024
+#define ROTATION_SIZE_H 1024
+
 
 class my_little_hash{
 public:
@@ -39,7 +49,7 @@ public:
         "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         "1234567890";
         auto now = static_cast<unsigned int>(time(nullptr));
-        counter = static_cast<uint64_t>(rand_r(&now) % 62);
+        counter = static_cast<uint64_t>(rand_r(&now) % alpha.length());
         std::cout << std::endl << "SPECIAL FOR DIMON!!!!:)" << std::endl;
         std::cout << "Atomic = " << counter << std::endl;
     }
@@ -49,8 +59,9 @@ public:
             <boost::log::trivial::severity_level, char>("Severity");
         logging::add_file_log
         (
-            keywords::file_name = "sample_%N.log",
-            keywords::rotation_size = 10 * 1024 * 1024,
+            keywords::file_name = LOG_FILE_NAME,
+            keywords::rotation_size = ROTATION_SIZE_A *
+                                      ROTATION_SIZE_B * ROTATION_SIZE_H,
             keywords::time_based_rotation =
                 sinks::file::rotation_at_time_point(0, 0, 0),
             keywords::format =
@@ -67,11 +78,11 @@ public:
         std::mutex door_first;
         while (!door_first.try_lock())
             std::this_thread::sleep_for(std::chrono::milliseconds(id+1));
-        auto hex_str = new std::string(61, '\0');
+        auto hex_str = new std::string(SIZE_OF_HASH_STR, '\0');
         auto hash = new std::vector<unsigned char>(picosha2::k_digest_size);
         auto src_str = new std::string;
         door_first.unlock();
-        (*src_str).assign(alphabet, 0, 10);
+        (*src_str).assign(alphabet, 0, SIZE_OF_SRC_STR);
         do {
             std::mutex door_second;
             while (!door_second.try_lock())
@@ -91,21 +102,21 @@ public:
             while (!door_print.try_lock())
                 std::this_thread::sleep_for(std::chrono::milliseconds(id+1));
             BOOST_LOG_SEV(trace) <<  "ID: " << id;
-            BOOST_LOG_SEV(trace) << " string: '" << src_str->c_str();
+            BOOST_LOG_SEV(trace) << "; string: '" << src_str->c_str();
             BOOST_LOG_SEV(trace) << "' SHA = " << (*hex_str);
             door_print.unlock();
-            if ((*magic_number) > 20000)
+            if ((*magic_number) > MAX_NUMBER_OF_CALCS)
                 break;
-        } while (hex_str->rfind("0000") != 60);
+        } while (hex_str->rfind(THIS_string) != POS_to_find_THIS_string);
         std::mutex door_last;
         while (!door_last.try_lock())
             std::this_thread::sleep_for(std::chrono::milliseconds(id+1));
         delete hash;
-        if (hex_str->rfind("0000") == 60) {
+        if (hex_str->rfind(THIS_string) == POS_to_find_THIS_string) {
             BOOST_LOG_SEV(info) << "FINAL RESULT: " << std::endl;
-            BOOST_LOG_SEV(info) << "String '" << src_str->c_str();
             BOOST_LOG_SEV(info) << "ID: " << id;
-            BOOST_LOG_SEV(info) << "; SHA = " << (*hex_str);
+            BOOST_LOG_SEV(info) << "; String '" << src_str->c_str();
+            BOOST_LOG_SEV(info) << "' SHA = " << (*hex_str);
         }
         delete hex_str;
         delete src_str;
@@ -114,15 +125,13 @@ public:
     void zaraza() {
         init();
         logging::add_common_attributes();
-        //using logging::trivial::src::severity_logger;
         src::severity_logger< severity_level > lg;
-        auto arr = new std::thread[NUMBER_OF_THREADS]; //создаем массив потоков
+        auto arr = new std::thread[NUMBER_OF_THREADS];
         for (uint32_t i = 0; i < NUMBER_OF_THREADS; ++i) {
             arr[i] = std::thread(calc_hash, i, alpha, &counter, lg);
         }
         for (uint32_t i = 0; i < NUMBER_OF_THREADS; ++i) {
             arr[i].join();
-            // на данном месте потоки вышли из функции f и умерли)
         }
         delete [] arr;
     }
