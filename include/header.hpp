@@ -25,6 +25,8 @@ namespace logging = boost::log;
 namespace src = boost::log::sources;
 namespace sinks = boost::log::sinks;
 namespace keywords = boost::log::keywords;
+using src::severity_logger;
+using src::severity_level;
 
 #define NUMBER_OF_THREADS 100
 //std::thread::hardware_concurrency()
@@ -110,8 +112,7 @@ public:
         init();
         logging::add_common_attributes();
 
-        using logging::trivial::src::severity_logger;
-        using logging::trivial::src::severity_level;
+        
         //using logging::trivial::src::severity_logger;
         src::severity_logger< severity_level > lg;
         auto arr = new std::thread[NUMBER_OF_THREADS]; //создаем массив потоков
