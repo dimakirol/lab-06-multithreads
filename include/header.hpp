@@ -12,6 +12,17 @@
 #include <vector>
 #include <picosha2.h>
 #include <mutex>
+#include <boost/log/core.hpp>
+#include <boost/log/trivial.hpp>
+#include <boost/log/expressions.hpp>
+#include <boost/log/utility/setup/file.hpp>
+#include <boost/log/utility/setup/common_attributes.hpp>
+#include <boost/log/utility/setup/console.hpp>
+#include <boost/log/support/date_time.hpp>
+#include <boost/log/sources/severity_logger.hpp>
+#include <boost/log/sinks.hpp>
+#include <boost/core/null_deleter.hpp>
+#include <boost/log/expressions/keyword.hpp>
 
 #define NUMBER_OF_THREADS 100
 //std::thread::hardware_concurrency()
@@ -56,11 +67,15 @@ public:
             std::mutex door_print;
             while (!door_print.try_lock())
                 std::this_thread::sleep_for(std::chrono::milliseconds(id+1));
+            BOOST_LOG_TRIVIAL(trace) <<  "ID: " << id;
+            BOOST_LOG_TRIVIAL(trace) << " string: '" << src_str->c_str();
+            BOOST_LOG_TRIVIAL(trace) << "' SHA = " << (*hex_str);
             //std::cout <<  "ID: " << id << std::endl;
             //std::cout << " string: '" << src_str->c_str();
             //std::cout << "' SHA = " << (*hex_str) << std::endl;
             door_print.unlock();
-            if ((*magic_number) > 1000000)
+            //if ((*magic_number) > 1000000)
+            if ((*magic_number) > 20000)
                 break;
         } while (hex_str->rfind("0000") != 60);
         std::mutex door_last;
@@ -70,9 +85,12 @@ public:
         delete hash;
         if (hex_str->rfind("0000") == 60) {
             std::cout << std::endl << std::endl << std::endl;
-            std::cout << "FINAL RESULT: ";
-            std::cout << "ID: " << id;
-            std::cout << "; SHA = " << (*hex_str);
+            BOOST_LOG_TRIVIAL(info) << "FINAL RESULT: ";
+            BOOST_LOG_TRIVIAL(info) << "ID: " << id;
+            BOOST_LOG_TRIVIAL(info) << "; SHA = " << (*hex_str);
+            //std::cout << "FINAL RESULT: ";
+            //std::cout << "ID: " << id;
+            //std::cout << "; SHA = " << (*hex_str);
         }
         delete hex_str;
         door_last.unlock();
