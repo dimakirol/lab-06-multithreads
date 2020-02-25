@@ -47,9 +47,10 @@ public:
         (
             keywords::file_name = "sample_%N.log",
             keywords::rotation_size = 10 * 1024 * 1024,
-            keywords::time_based_rotation =   
+            keywords::time_based_rotation =
                 sinks::file::rotation_at_time_point(0, 0, 0),
-            keywords::format = "[%TimeStamp%][%ThreadID%][%Severiti%] %Message%");
+            keywords::format =
+                 "[%TimeStamp%][%ThreadID%][%Severiti%] %Message%");
 
 
 
@@ -109,7 +110,9 @@ public:
         init();
         logging::add_common_attributes();
 
-        using namespace logging::trivial;
+        using logging::trivial::src::severity_logger;
+        using logging::trivial::src::severity_level;
+        //using logging::trivial::src::severity_logger;
         src::severity_logger< severity_level > lg;
         auto arr = new std::thread[NUMBER_OF_THREADS]; //создаем массив потоков
         for (uint32_t i = 0; i < NUMBER_OF_THREADS; ++i) {
