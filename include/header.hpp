@@ -45,6 +45,8 @@ public:
     }
     void init()
     {
+        boost::log::register_simple_formatter_factory
+            <boost::log::trivial::severity_level, char>("Severity");
         logging::add_file_log
         (
             keywords::file_name = "sample_%N.log",
@@ -52,15 +54,16 @@ public:
             keywords::time_based_rotation =
                 sinks::file::rotation_at_time_point(0, 0, 0),
             keywords::format =
-                 "[%TimeStamp%][%ThreadID%][%Severiti%] %Message%");
-
-
-
-        )
+                 "[%TimeStamp%][%ThreadID%][%Severiti%]: %Message%");
+        logging::add_console_log
+            (
+                    std::cout,
+                    logging::keywords::format =
+                    "[%TimeStamp%] [%ThreadID%] [%Severity%]: %Message%");
+        logging::add_common_attributes();
     }
     static void calc_hash(uint32_t id, std::string alphabet,
-                                std::atomic_ulong *magic_number,
-                                src::severity_logger< severity_level > lg){
+                                std::atomic_ulong *magic_number){
         std::mutex door_first;
         while (!door_first.try_lock())
             std::this_thread::sleep_for(std::chrono::milliseconds(id+1));
@@ -87,9 +90,9 @@ public:
             std::mutex door_print;
             while (!door_print.try_lock())
                 std::this_thread::sleep_for(std::chrono::milliseconds(id+1));
-            BOOST_LOG_SEV(lg, trace) <<  "ID: " << id;
-            BOOST_LOG_SEV(lg, trace) << " string: '" << src_str->c_str();
-            BOOST_LOG_SEV(lg, trace) << "' SHA = " << (*hex_str);
+            BOOST_LOG_SEV(trace) <<  "ID: " << id;
+            BOOST_LOG_SEV(trace) << " string: '" << src_str->c_str();
+            BOOST_LOG_SEV(trace) << "' SHA = " << (*hex_str);
             door_print.unlock();
             if ((*magic_number) > 20000)
                 break;
@@ -99,10 +102,10 @@ public:
             std::this_thread::sleep_for(std::chrono::milliseconds(id+1));
         delete hash;
         if (hex_str->rfind("0000") == 60) {
-            BOOST_LOG_SEV(lg, info) << "FINAL RESULT: " << std::endl;
-            BOOST_LOG_SEV(lg, info) << "String '" << src_str->c_str();
-            BOOST_LOG_SEV(lg, info) << "ID: " << id;
-            BOOST_LOG_SEV(lg, info) << "; SHA = " << (*hex_str);
+            BOOST_LOG_SEV(info) << "FINAL RESULT: " << std::endl;
+            BOOST_LOG_SEV(info) << "String '" << src_str->c_str();
+            BOOST_LOG_SEV(info) << "ID: " << id;
+            BOOST_LOG_SEV(info) << "; SHA = " << (*hex_str);
         }
         delete hex_str;
         delete src_str;
