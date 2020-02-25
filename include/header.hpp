@@ -17,6 +17,7 @@
 #include <boost/log/expressions.hpp>
 #include <boost/log/sinks/text_file_backend.hpp>
 #include <boost/log/utility/setup/file.hpp>
+#include <boost/log/utility/setup/console.hpp>
 #include <boost/log/utility/setup/common_attributes.hpp>
 #include <boost/log/sources/severity_logger.hpp>
 #include <boost/log/sources/record_ostream.hpp>
@@ -26,7 +27,7 @@ namespace src = boost::log::sources;
 namespace sinks = boost::log::sinks;
 namespace keywords = boost::log::keywords;
 using src::severity_logger;
-using src::severity_level;
+using boost::log::trivial::severity_level;
 
 #define NUMBER_OF_THREADS 100
 //std::thread::hardware_concurrency()
@@ -101,9 +102,10 @@ public:
             std::mutex door_print;
             while (!door_print.try_lock())
                 std::this_thread::sleep_for(std::chrono::milliseconds(id+1));
-            BOOST_LOG_SEV(trace) <<  "ID: " << id;
-            BOOST_LOG_SEV(trace) << "; string: '" << src_str->c_str();
-            BOOST_LOG_SEV(trace) << "' SHA = " << (*hex_str);
+            //BOOST_LOG_SEV(trace, lg) <<  "ID: " << id; הכÿ גûגמהא ג פאיכ
+            BOOST_LOG_TRIVIAL(trace) <<  "ID: " << id;
+            BOOST_LOG_TRIVIAL(trace) << "; string: '" << src_str->c_str();
+            BOOST_LOG_TRIVIAL(trace) << "' SHA = " << (*hex_str);
             door_print.unlock();
             if ((*magic_number) > MAX_NUMBER_OF_CALCS)
                 break;
@@ -113,10 +115,10 @@ public:
             std::this_thread::sleep_for(std::chrono::milliseconds(id+1));
         delete hash;
         if (hex_str->rfind(THIS_string) == POS_to_find_THIS_string) {
-            BOOST_LOG_SEV(info) << "FINAL RESULT: " << std::endl;
-            BOOST_LOG_SEV(info) << "ID: " << id;
-            BOOST_LOG_SEV(info) << "; String '" << src_str->c_str();
-            BOOST_LOG_SEV(info) << "' SHA = " << (*hex_str);
+            BOOST_LOG_TRIVIAL(info) << "FINAL RESULT: " << std::endl;
+            BOOST_LOG_TRIVIAL(info) << "ID: " << id;
+            BOOST_LOG_TRIVIAL(info) << "; String '" << src_str->c_str();
+            BOOST_LOG_TRIVIAL(info) << "' SHA = " << (*hex_str);
         }
         delete hex_str;
         delete src_str;
@@ -128,7 +130,7 @@ public:
         src::severity_logger< severity_level > lg;
         auto arr = new std::thread[NUMBER_OF_THREADS];
         for (uint32_t i = 0; i < NUMBER_OF_THREADS; ++i) {
-            arr[i] = std::thread(calc_hash, i, alpha, &counter, lg);
+            arr[i] = std::thread(calc_hash, i, alpha, &counter);//, lg);
         }
         for (uint32_t i = 0; i < NUMBER_OF_THREADS; ++i) {
             arr[i].join();
