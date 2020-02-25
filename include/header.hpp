@@ -114,8 +114,6 @@ public:
     void zaraza() {
         init();
         logging::add_common_attributes();
-
-        
         //using logging::trivial::src::severity_logger;
         src::severity_logger< severity_level > lg;
         auto arr = new std::thread[NUMBER_OF_THREADS]; //создаем массив потоков
